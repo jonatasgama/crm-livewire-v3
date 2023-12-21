@@ -3,6 +3,9 @@ export default {
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
+    "./app/View/Components/**/**/*.php",
+    "./app/Livewire/**/**/*.php",
+    "./vendor/robsontenorio/mary/src/View/Components/**/*.php"
   ],
   theme: {
     extend: {},
@@ -10,6 +13,7 @@ export default {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
+    require("daisyui"),
   ],
 }
 
