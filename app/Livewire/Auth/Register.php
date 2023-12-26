@@ -3,9 +3,9 @@
 namespace App\Livewire\Auth;
 
 use Livewire\Component;
-use Models\User;
+use App\Models\User;
 use Livewire\Attributes\Rule;
-use Providers\RouteServiceProvider;
+use App\Providers\RouteServiceProvider;
 
 class Register extends Component
 {
@@ -19,16 +19,16 @@ class Register extends Component
     #[Rule(['required'])]
     public ?string $password;
 
-    public function render(): View
+    public function render()
     {
-        return view('livewire.auth.register');
+        return view('livewire.auth.register')->layout('components.layouts.guest');
     }
 
-    public function submit(): void{
+    public function submit(): void {
 
         $this->validate();
 
-        $user = User::query()->create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password
