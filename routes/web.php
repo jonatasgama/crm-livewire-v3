@@ -15,6 +15,6 @@ use App\Livewire\Auth\Register;
 |
 */
 
-Route::get('/', Welcome::class);
+Route::get('/', Welcome::class)->name('dashboard');
 Route::get('/register', Register::class)->name('auth.register');
 Route::get('/logout', fn() => Auth::logout());
