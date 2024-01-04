@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Welcome;
-use App\Livewire\Auth\Register;
+use App\Livewire\Auth\{Register, Login};
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,10 @@ use App\Livewire\Auth\Register;
 |
 */
 
-Route::get('/', Welcome::class)->name('dashboard');
+Route::get('/login', Login::class)->name('login');
 Route::get('/register', Register::class)->name('auth.register');
 Route::get('/logout', fn() => Auth::logout());
+
+Route::middleware('auth')->group(function(){
+    Route::get('/', Welcome::class)->name('dashboard');
+});

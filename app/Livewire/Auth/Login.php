@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -9,17 +10,17 @@ use Livewire\Component;
 class Login extends Component
 {
 
-    public ?string $email;
-    public ?string $password;
+    public ?string $email = null;
+    public ?string $password = null;
 
     public function render()
     {
-        return view('livewire.auth.login');
+        return view('livewire.auth.login')->layout('components.layouts.guest');
     }
 
     public function tryToLogin(): void{
 
-        if($this->ensureIsNotRateLimitng()){
+        if($this->ensureIsNotRateLimiting()){
             return;
         }
 
@@ -34,16 +35,11 @@ class Login extends Component
         $this->redirect(route('dashboard'));
     }
 
-    private function throttleKey()
-    {
-        return Str::transliterate(Str::lower($this->email). '|' .request()->ip());
-    }
-
-    private function ensureIsNotRateLimitng()
+    private function ensureIsNotRateLimiting(): bool
     {
         if(RateLimiter::tooManyAttempts($this->throttleKey(), 5)){
 
-            $this->addError('rateLimitter', trans('auth.throttle', [
+            $this->addError('rateLimiter', trans('auth.throttle', [
                 'seconds' => RateLimiter::availableIn($this->throttleKey()),
             ]));
 
@@ -51,5 +47,10 @@ class Login extends Component
         }
 
         return false;
+    }
+
+    private function throttleKey(): string
+    {
+        return Str::transliterate(Str::lower($this->email). '|' .request()->ip());
     }
 }
