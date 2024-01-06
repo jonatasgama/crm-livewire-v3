@@ -18,7 +18,7 @@
         <x-input label="E-mail" wire:model="email" />
         <x-input label="Senha" wire:model="password" type="password" />
         <div class="w-full text-right text-sm">
-            <a wire:navigate href="{{ route('auth.password.recovery') }}" class="underline">Esqueceu a senha?</a>
+            <a wire:navigate href="{{ route('password.recovery') }}" class="underline">Esqueceu a senha?</a>
         </div>
 
         <x-slot:actions>
